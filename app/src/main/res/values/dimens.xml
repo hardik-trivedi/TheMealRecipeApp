@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="eight">8dp</dimen>
+    <dimen name="sixteen">16dp</dimen>
+    <dimen name="imageBigHeight">200dp</dimen>
+    <dimen name="img_medium_dimens">90dp</dimen>
+    <dimen name="img_small_dimens">60dp</dimen>
+    <dimen name="four">4dp</dimen>
+    <dimen name="loaderImageDimens">100dp</dimen>
+</resources>

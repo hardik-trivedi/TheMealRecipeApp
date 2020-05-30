@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:icon="@drawable/whats_new"
+          android:id="@+id/whatsNewFragment"
+          android:title="@string/what_s_new"/>
+    <item android:icon="@drawable/by_category"
+          android:id="@+id/recipeByCategoryFragment"
+          android:title="@string/by_category"/>
+    <item android:icon="@drawable/by_regions"
+          android:id="@+id/recipeByRegionFragment"
+          android:title="@string/by_region"/>
+</menu>

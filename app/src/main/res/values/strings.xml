@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">The Dhaba</string>
+    <string name="display_name">The\nInternational\nDhaba</string>
+    <string name="image_credit">Image credit : https://www.allmacwallpaper.com</string>
+    <string name="tag_line">Eat healthy code healthy :)</string>
+    <string name="what_s_new">What\'s new</string>
+    <string name="by_category">By category</string>
+    <string name="by_region">By region</string>
+    <string name="recipe_of_the_day">Recipe of the day</string>
+
+    <string name="ingredients">Ingredients</string>
+    <string name="steps_to_cook">Steps to cook</string>
+    <string name="search_recipe">Search Recipe</string>
+    <string name="watch_video">Watch video</string>
+    <string name="share_recipe">Share recipe</string>
+    <string name="recipe_list">Recipe list</string>
+    <string name="no_internet_available">No internet connection!</string>
+    <string name="something_went_wrong">Something went wrong, please try again!</string>
+    <string name="retry">Retry</string>
+    <string name="video_not_found">Video not found, please try again!</string>
+    <string name="recipe_not_found">Recipe not found, please try again!</string>
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <ImageView
+            android:layout_width="@dimen/img_small_dimens"
+            android:layout_height="@dimen/img_small_dimens"
+            app:srcCompat="@color/grey"
+            android:id="@+id/regionImageView"
+            android:layout_marginTop="@dimen/sixteen"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/sixteen" android:layout_marginBottom="@dimen/sixteen"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+            tools:text="Veggie burrito"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/regionNameTextView"
+            app:layout_constraintStart_toEndOf="@+id/regionImageView"
+            android:layout_marginStart="@dimen/sixteen"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/sixteen"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/regionImageView" android:layout_marginTop="@dimen/eight"
+            app:layout_constraintTop_toTopOf="@+id/regionImageView"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
