@@ -1,5 +1,6 @@
 package com.hardiktrivedi.theinternationaldhaba.recipeList
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.hardiktrivedi.theinternationaldhaba.data.Recipe
 import com.hardiktrivedi.theinternationaldhaba.repository.SearchRecipeRepository
@@ -16,7 +17,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  */
 class RecipeListViewModel(private val repository: SearchRecipeRepository) :
     ViewStateAwareViewModel() {
-    val getRecipeByName = MutableLiveData<List<Recipe>>()
+    private val _getRecipeByName = MutableLiveData<List<Recipe>>()
+    val getRecipeByName = _getRecipeByName as LiveData<List<Recipe>>
 
     /**
      * Fetches recipe by it's name.
@@ -32,7 +34,7 @@ class RecipeListViewModel(private val repository: SearchRecipeRepository) :
             }
             .doFinally { _progress.postValue(false) }
             .subscribe(
-                { getRecipeByName.postValue(it) },
+                { _getRecipeByName.postValue(it) },
                 { e -> handleError(e) }
             )
             .asDisposable(compositeDisposable)

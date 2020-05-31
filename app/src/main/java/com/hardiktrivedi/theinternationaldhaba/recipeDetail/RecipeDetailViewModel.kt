@@ -1,5 +1,6 @@
 package com.hardiktrivedi.theinternationaldhaba.recipeDetail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.hardiktrivedi.theinternationaldhaba.data.Recipe
 import com.hardiktrivedi.theinternationaldhaba.repository.SearchRecipeRepository
@@ -14,19 +15,18 @@ import com.hardiktrivedi.theinternationaldhaba.viewstate.ViewStateAwareViewModel
  */
 class RecipeDetailViewModel(private val repository: SearchRecipeRepository) :
     ViewStateAwareViewModel() {
-    val recipeDetail = MutableLiveData<Recipe>()
+    private val _recipeDetail = MutableLiveData<Recipe>()
+    val recipeDetail = _recipeDetail as LiveData<Recipe>
 
     /**
      * Performs an API call using repository
      */
     fun fetchRecipeById(recipe: Recipe) {
         repository.searchRecipeById(recipeId = recipe.id)
-            .doOnSubscribe {
-                _progress.postValue(true)
-            }
+            .doOnSubscribe { _progress.postValue(true) }
             .doFinally { _progress.postValue(false) }
             .subscribe(
-                { recipeDetail.postValue(it) },
+                { _recipeDetail.postValue(it) },
                 { e -> handleError(e) }
             )
             .asDisposable(compositeDisposable)
