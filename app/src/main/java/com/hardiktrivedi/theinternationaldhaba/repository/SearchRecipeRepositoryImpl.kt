@@ -25,6 +25,7 @@ class SearchRecipeRepositoryImpl(private val searchRecipeService: SearchRecipeSe
     override fun searchRecipeByName(recipeName: String): Flow<List<Recipe>> {
         return flowOfRecipe { searchRecipeService.getRecipeByName(recipeName) }
             .onEach { delay(delay) }
+            .catch { e -> transformError(e) }
             .map { it.meals.map { it.mapToRecipe() } }
     }
 
