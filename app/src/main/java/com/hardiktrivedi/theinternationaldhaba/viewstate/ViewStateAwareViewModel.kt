@@ -5,11 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hardiktrivedi.theinternationaldhaba.exception.NoInternetAvailableException
 import com.hardiktrivedi.theinternationaldhaba.exception.SomethingWentWrongException
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 /**
  * A view model which is an abstract class. It holds the bunch of LiveData properties
  */
 abstract class ViewStateAwareViewModel : ViewModel() {
+    val compositeDisposable = CompositeDisposable()
+
+    fun dispose() {
+        compositeDisposable.clear()
+    }
+
     /**
      * Mutable instance which can post the updated value of type NoInternetAvailableException
      */

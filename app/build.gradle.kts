@@ -14,7 +14,7 @@ android {
     compileSdkVersion(29)
     defaultConfig {
         applicationId = "com.hardiktrivedi.theinternationaldhaba"
-        minSdkVersion(23)
+        minSdkVersion(26)
         targetSdkVersion(29)
         versionCode = 1
         versionName = "1.0"
@@ -28,6 +28,10 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+    compileOptions {
+        sourceCompatibility = org.gradle.api.JavaVersion.VERSION_1_8
+        targetCompatibility = org.gradle.api.JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         val options = this as KotlinJvmOptions
@@ -66,9 +70,6 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.9.0")
 
-    val kodeinVersion = "6.4.0"
-    implementation("org.kodein.di:kodein-di-generic-jvm:$kodeinVersion")
-
     // Live data and view model
     val lifecycleVersion = "2.2.0"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
@@ -97,17 +98,16 @@ dependencies {
     implementation("org.koin:koin-androidx-viewmodel:$koinVersion") {
         because("An extension to support easy DI specially for view models")
     }
+    // Rx-Android
+    val rxAndroid = "3.0.0"
+    implementation("io.reactivex.rxjava3:rxandroid:$rxAndroid")
+    implementation("io.reactivex.rxjava3:rxjava:$rxAndroid")
 
     // Network calls
-    val retrofitVersion = "2.6.2"
+    val retrofitVersion = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-
-    // Coroutines
-    val coroutineVersion = "1.3.7"
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
+    implementation("com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion")
 
     // Lottie animations
     val lottieVersion = "3.3.1"

@@ -7,6 +7,7 @@ import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
@@ -28,5 +29,6 @@ private fun provideRetrofitClient(context: Context): Retrofit {
 
     return Retrofit.Builder().baseUrl(context.getString(R.string.baseUrl))
         .client(okHttpClient)
+        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create()).build()
 }

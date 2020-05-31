@@ -1,13 +1,10 @@
 package com.hardiktrivedi.theinternationaldhaba.recipeDetail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.MutableLiveData
 import com.hardiktrivedi.theinternationaldhaba.data.Recipe
 import com.hardiktrivedi.theinternationaldhaba.repository.SearchRecipeRepository
+import com.hardiktrivedi.theinternationaldhaba.utility.extenstions.asDisposable
 import com.hardiktrivedi.theinternationaldhaba.viewstate.ViewStateAwareViewModel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
 
 /**
  * A subclass of [ViewStateAwareViewModel] which gets the details of [Recipe] and display
@@ -17,16 +14,21 @@ import kotlinx.coroutines.flow.onStart
  */
 class RecipeDetailViewModel(private val repository: SearchRecipeRepository) :
     ViewStateAwareViewModel() {
+    val recipeDetail = MutableLiveData<Recipe>()
+
     /**
      * Performs an API call using repository
      */
-    fun fetchRecipeById(recipe: Recipe): LiveData<Recipe> {
-        return repository.searchRecipeById(recipeId = recipe.id)
-            .onStart {
+    fun fetchRecipeById(recipe: Recipe) {
+        repository.searchRecipeById(recipeId = recipe.id)
+            .doOnSubscribe {
                 _progress.postValue(true)
             }
-            .catch { e -> handleError(e) }
-            .onCompletion { _progress.postValue(false) }
-            .asLiveData()
+            .doFinally { _progress.postValue(false) }
+            .subscribe(
+                { recipeDetail.postValue(it) },
+                { e -> handleError(e) }
+            )
+            .asDisposable(compositeDisposable)
     }
 }

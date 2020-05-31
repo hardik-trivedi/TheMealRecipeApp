@@ -91,8 +91,11 @@ class RecipeListFragment : ViewStateAwareFragment() {
     }
 
     private fun showRecipes(recipeName: String) {
-        viewModel.getRecipeByName(recipeName)
-            .observe(viewLifecycleOwner, recipeObserver)
+        viewModel.run {
+            getRecipeByName
+                .observe(viewLifecycleOwner, recipeObserver)
+            getRecipeByName(recipeName)
+        }
     }
 
     /**
@@ -134,5 +137,10 @@ class RecipeListFragment : ViewStateAwareFragment() {
                 loaderView.gone()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.dispose()
     }
 }

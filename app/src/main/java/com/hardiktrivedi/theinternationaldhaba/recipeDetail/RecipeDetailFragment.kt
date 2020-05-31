@@ -26,6 +26,10 @@ class RecipeDetailFragment : ViewStateAwareFragment() {
 
     override val viewModel: RecipeDetailViewModel by viewModel()
 
+    companion object ArgumentParams {
+        const val RECIPE = "recipe"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,8 +69,10 @@ class RecipeDetailFragment : ViewStateAwareFragment() {
         val recipe =
             requireNotNull(arguments.getParcelable<Recipe>(RECIPE)) { "Recipe can not be null" }
 
-        viewModel.fetchRecipeById(recipe = recipe)
-            .observe(viewLifecycleOwner, Observer { showRecipeDetail(it) })
+        viewModel.run {
+            fetchRecipeById(recipe = recipe)
+            recipeDetail.observe(viewLifecycleOwner, Observer { showRecipeDetail(it) })
+        }
     }
 
     /**
@@ -137,7 +143,8 @@ class RecipeDetailFragment : ViewStateAwareFragment() {
         }
     }
 
-    companion object ArgumentParams {
-        const val RECIPE = "recipe"
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.dispose()
     }
 }

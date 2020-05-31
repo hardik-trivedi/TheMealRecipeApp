@@ -1,13 +1,12 @@
 package com.hardiktrivedi.theinternationaldhaba.recipeList
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
+import androidx.lifecycle.MutableLiveData
 import com.hardiktrivedi.theinternationaldhaba.data.Recipe
 import com.hardiktrivedi.theinternationaldhaba.repository.SearchRecipeRepository
-import com.hardiktrivedi.theinternationaldhaba.repository.data.mapToRecipe
+import com.hardiktrivedi.theinternationaldhaba.utility.extenstions.asDisposable
 import com.hardiktrivedi.theinternationaldhaba.viewstate.ViewStateAwareViewModel
-import kotlinx.coroutines.flow.*
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 /**
  * A subclass of [ViewStateAwareViewModel] which gets the list of [Recipe] and display.
@@ -17,21 +16,25 @@ import kotlinx.coroutines.flow.*
  */
 class RecipeListViewModel(private val repository: SearchRecipeRepository) :
     ViewStateAwareViewModel() {
+    val getRecipeByName = MutableLiveData<List<Recipe>>()
 
     /**
      * Fetches recipe by it's name.
      *
      * @param recipeName Name of selected recipe.
-     * @return LiveData<List<Recipe>> emits list of [Recipe]
      */
-    fun getRecipeByName(recipeName: String): LiveData<List<Recipe>> {
-        return repository.searchRecipeByName(recipeName)
-                .onStart {
-                    _progress.postValue(true)
-                }
-                .catch { e -> handleError(e) }
-                .onCompletion { _progress.postValue(false) }
-                .asLiveData()
-
+    fun getRecipeByName(recipeName: String) {
+        repository.searchRecipeByName(recipeName)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {
+                _progress.postValue(true)
+            }
+            .doFinally { _progress.postValue(false) }
+            .subscribe(
+                { getRecipeByName.postValue(it) },
+                { e -> handleError(e) }
+            )
+            .asDisposable(compositeDisposable)
     }
 }

@@ -2,6 +2,7 @@ package com.hardiktrivedi.theinternationaldhaba.repository.network
 
 import com.hardiktrivedi.theinternationaldhaba.repository.data.RecipeByResponse
 import com.hardiktrivedi.theinternationaldhaba.repository.data.RecipeListResponse
+import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -10,8 +11,8 @@ import retrofit2.http.Query
  */
 interface SearchRecipeService {
     @GET("search.php")
-    suspend fun getRecipeByName(@Query("s") recipeName: String): RecipeByResponse
+    fun getRecipeByName(@Query("s") recipeName: String): Single<RecipeByResponse>
 
     @GET("lookup.php")
-    suspend fun getRecipeById(@Query("i") recipeId: String): RecipeListResponse
+    fun getRecipeById(@Query("i") recipeId: String): Single<RecipeListResponse>
 }
